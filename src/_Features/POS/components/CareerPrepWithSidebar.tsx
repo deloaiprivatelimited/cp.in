@@ -12,6 +12,8 @@ import {
 } from "lucide-react";
 
 import Overview from "./sections/Overview";
+import AptitudeDSA from "./sections/AptitudeDSA";
+import DevelopmentReadiness from "./sections/DevelopmentReadiness";
 import SkillStack from "./sections/SkillStack";
 import LinkedInEngine from "./sections/LinkedInEngine";
 import GitHubFactory from "./sections/GitHubFactory";
@@ -20,16 +22,18 @@ import ProjectPolishing from "./sections/ProjectPolishing";
 import InterviewDrills from "./sections/InterviewDrills";
 import SignalBoost from "./sections/SignalBoost";
 import FinalSprint from "./sections/FinalSprint";
+import ResumeEngine from "./sections/ResumeEngine";
 
 const TABS = [
   { key: "overview", label: "Overview", icon: LayoutGrid, component: Overview },
-  { key: "skill-stack", label: "Skill Stack", icon: Briefcase, component: SkillStack },
+    { key: "aptitude-dsa", label: "Aptitude & DSA", icon: Briefcase, component: AptitudeDSA },
+
+  { key: "development-readiness", label: "Development Readiness", icon: Briefcase, component: DevelopmentReadiness},
   { key: "linkedin-engine", label: "LinkedIn Engine", icon: Megaphone, component: LinkedInEngine },
   { key: "github-factory", label: "GitHub Factory", icon: Github, component: GitHubFactory },
   { key: "internship-radar", label: "Internship Radar", icon: Radar, component: InternshipRadar },
   { key: "project-polishing", label: "Project Polishing", icon: Wand2, component: ProjectPolishing },
-  { key: "interview-drills", label: "Interview Drills", icon: MessageSquare, component: InterviewDrills },
-  { key: "signal-boost", label: "Signal Boost", icon: Megaphone, component: SignalBoost },
+  { key: "resume-engine", label: "Resume Engine", icon: MessageSquare, component: ResumeEngine },
   { key: "final-sprint", label: "Final Sprint", icon: Rocket, component: FinalSprint },
 ];
 
