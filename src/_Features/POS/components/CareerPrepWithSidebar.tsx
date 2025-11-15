@@ -10,7 +10,7 @@ import {
   Rocket,
   LayoutGrid,
 } from "lucide-react";
-
+import AIReadiness from "./sections/AiReadiness";
 import Overview from "./sections/Overview";
 import AptitudeDSA from "./sections/AptitudeDSA";
 import DevelopmentReadiness from "./sections/DevelopmentReadiness";
@@ -27,7 +27,7 @@ import ResumeEngine from "./sections/ResumeEngine";
 const TABS = [
   { key: "overview", label: "Overview", icon: LayoutGrid, component: Overview },
     { key: "aptitude-dsa", label: "Aptitude & DSA", icon: Briefcase, component: AptitudeDSA },
-
+  { key: "ai-readiness", label: "AI Readiness", icon: Wand2, component: AIReadiness },
   { key: "development-readiness", label: "Development Readiness", icon: Briefcase, component: DevelopmentReadiness},
   { key: "linkedin-engine", label: "LinkedIn Engine", icon: Megaphone, component: LinkedInEngine },
   { key: "github-factory", label: "GitHub Factory", icon: Github, component: GitHubFactory },
