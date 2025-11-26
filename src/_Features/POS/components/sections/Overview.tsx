@@ -1,14 +1,11 @@
-import { motion } from "framer-motion";
+import React from "react";
 import { CheckCircle2, Sparkles } from "lucide-react";
 
 export default function Overview({ isWhiteBackground }: { isWhiteBackground: boolean }) {
   return (
     <div className="flex items-start justify-center px-4">
       <div className="max-w-3xl w-full">
-        <motion.div
-          initial={{ opacity: 0, y: -6 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+        <div
           className={`mb-6 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 backdrop-blur ${
             isWhiteBackground ? "border-slate-200 bg-slate-100" : "border-white/10 bg-white/5"
           }`}
@@ -17,23 +14,17 @@ export default function Overview({ isWhiteBackground }: { isWhiteBackground: boo
           <span className={`text-xs font-medium tracking-wide ${isWhiteBackground ? "text-slate-700" : "text-slate-200"}`}>
             Placement Operating System · 2025–26
           </span>
-        </motion.div>
+        </div>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.05 }}
+        <h1
           className={`text-balance text-3xl font-semibold leading-tight md:text-5xl ${
             isWhiteBackground ? "text-slate-900" : "text-slate-100"
           }`}
         >
           The Placement Operating System
-        </motion.h1>
+        </h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
+        <p
           className={`mt-5 text-pretty text-lg leading-relaxed md:text-xl ${
             isWhiteBackground ? "text-slate-600" : "text-slate-300"
           }`}
@@ -43,12 +34,9 @@ export default function Overview({ isWhiteBackground }: { isWhiteBackground: boo
           <span className={`font-medium ${isWhiteBackground ? "text-slate-900" : "text-slate-100"}`}> build</span>,
           <span className={`font-medium ${isWhiteBackground ? "text-slate-900" : "text-slate-100"}`}> communicate</span>, and
           <span className={`font-medium ${isWhiteBackground ? "text-slate-900" : "text-slate-100"}`}> be found</span>.
-        </motion.p>
+        </p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.15 }}
+        <div
           className={`mt-8 rounded-2xl border p-6 shadow-2xl backdrop-blur ${
             isWhiteBackground ? "border-slate-200 bg-white/80" : "border-white/10 bg-white/5"
           }`}
@@ -82,7 +70,7 @@ export default function Overview({ isWhiteBackground }: { isWhiteBackground: boo
               </li>
             ))}
           </ul>
-        </motion.div>
+        </div>
       </div>
     </div>
   );

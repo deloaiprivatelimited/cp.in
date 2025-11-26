@@ -1,5 +1,6 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   Briefcase,
   Github,
@@ -10,6 +11,7 @@ import {
   Rocket,
   LayoutGrid,
 } from "lucide-react";
+
 import AIReadiness from "./sections/AiReadiness";
 import Overview from "./sections/Overview";
 import AptitudeDSA from "./sections/AptitudeDSA";
@@ -24,57 +26,46 @@ import SignalBoost from "./sections/SignalBoost";
 import FinalSprint from "./sections/FinalSprint";
 import ResumeEngine from "./sections/ResumeEngine";
 
+const BASE = "/Preparation-Guide";
+
 const TABS = [
-  { key: "overview", label: "Overview", icon: LayoutGrid, component: Overview },
-    { key: "aptitude-dsa", label: "Aptitude & DSA", icon: Briefcase, component: AptitudeDSA },
-  { key: "ai-readiness", label: "AI Readiness", icon: Wand2, component: AIReadiness },
-  { key: "development-readiness", label: "Development Readiness", icon: Briefcase, component: DevelopmentReadiness},
-  { key: "linkedin-engine", label: "LinkedIn Engine", icon: Megaphone, component: LinkedInEngine },
-  { key: "github-factory", label: "GitHub Factory", icon: Github, component: GitHubFactory },
-  { key: "internship-radar", label: "Internship Radar", icon: Radar, component: InternshipRadar },
-  { key: "project-polishing", label: "Project Polishing", icon: Wand2, component: ProjectPolishing },
-  { key: "resume-engine", label: "Resume Engine", icon: MessageSquare, component: ResumeEngine },
-  { key: "final-sprint", label: "Final Sprint", icon: Rocket, component: FinalSprint },
+  { key: "overview", label: "Overview", icon: LayoutGrid, component: Overview, path: `${BASE}/overview` },
+  { key: "aptitude-dsa", label: "Aptitude & DSA", icon: Briefcase, component: AptitudeDSA, path: `${BASE}/aptitude-dsa` },
+  { key: "ai-readiness", label: "AI Readiness", icon: Wand2, component: AIReadiness, path: `${BASE}/ai-readiness` },
+  { key: "development-readiness", label: "Development Readiness", icon: Briefcase, component: DevelopmentReadiness, path: `${BASE}/development-readiness` },
+  { key: "linkedin-engine", label: "LinkedIn Engine", icon: Megaphone, component: LinkedInEngine, path: `${BASE}/linkedin-engine` },
+  { key: "github-factory", label: "GitHub Factory", icon: Github, component: GitHubFactory, path: `${BASE}/github-factory` },
+  { key: "internship-radar", label: "Internship Radar", icon: Radar, component: InternshipRadar, path: `${BASE}/internship-radar` },
+  { key: "project-polishing", label: "Project Polishing", icon: Wand2, component: ProjectPolishing, path: `${BASE}/project-polishing` },
+  { key: "resume-engine", label: "Resume Engine", icon: MessageSquare, component: ResumeEngine, path: `${BASE}/resume-engine` },
+  { key: "final-sprint", label: "Final Sprint", icon: Rocket, component: FinalSprint, path: `${BASE}/final-sprint` },
 ];
 
-const pageVariants = {
-  initial: {
-    opacity: 0,
-    scale: 0.95,
-    rotateX: -10,
-  },
-  animate: {
-    opacity: 1,
-    scale: 1,
-    rotateX: 0,
-    transition: {
-      duration: 0.7,
-      ease: [0.25, 0.1, 0.25, 1],
-    }
-  },
-  exit: {
-    opacity: 0,
-    scale: 1.05,
-    rotateX: 10,
-    transition: {
-      duration: 0.5,
-      ease: [0.25, 0.1, 0.25, 1],
-    }
-  },
-};
-
 export default function CareerPrepWithSidebar() {
-  const [active, setActive] = React.useState("overview");
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const activeIndex = TABS.findIndex((tab) => tab.key === active);
-  const isWhiteBackground =true;
-  const ActiveComponent = TABS[activeIndex].component;
+  // Normalize pathname (strip trailing slash)
+  const pathname = location.pathname.replace(/\/+$/, "") || "/";
+
+  // If user hits the base path, treat as overview
+  const effectivePath = pathname === BASE ? `${BASE}/overview` : pathname;
+
+  // Find the active tab by exact match or fallback to startsWith
+  const activeTab =
+    TABS.find((t) => t.path === effectivePath) ??
+    TABS.find((t) => effectivePath.startsWith(t.path));
+
+  const activeKey = activeTab?.key ?? "overview";
+  const ActiveComponent = activeTab?.component ?? Overview;
+
+  const isWhiteBackground = true;
 
   return (
     <div className="relative min-h-screen overflow-hidden">
       <AnimatePresence mode="wait">
         <motion.div
-          key={ "black"}
+          key={"black"}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -86,20 +77,6 @@ export default function CareerPrepWithSidebar() {
           }`}
         />
       </AnimatePresence>
-
-      {!isWhiteBackground && (
-        <>
-          <div
-            className="pointer-events-none fixed inset-0 -z-10 opacity-[0.06]"
-            style={{
-              backgroundImage:
-                "linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)",
-              backgroundSize: "36px 36px",
-            }}
-          />
-          <div className="fixed -top-24 -right-24 h-72 w-72 rounded-full blur-3xl opacity-30 bg-[#77dd77] -z-10" />
-        </>
-      )}
 
       {isWhiteBackground && (
         <>
@@ -115,29 +92,32 @@ export default function CareerPrepWithSidebar() {
         </>
       )}
 
+      {!isWhiteBackground && (
+        <>
+          <div
+            className="pointer-events-none fixed inset-0 -z-10 opacity-[0.06]"
+            style={{
+              backgroundImage:
+                "linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)",
+              backgroundSize: "36px 36px",
+            }}
+          />
+          <div className="fixed -top-24 -right-24 h-72 w-72 rounded-full blur-3xl opacity-30 bg-[#77dd77] -z-10" />
+        </>
+      )}
+
       <div className="mx-auto max-w-7xl px-4 md:px-6 py-6">
-        <MobileTabs active={active} setActive={setActive} isWhiteBackground={isWhiteBackground} />
+        <MobileTabs active={activeKey} navigate={navigate} isWhiteBackground={isWhiteBackground} />
 
         <div className="mt-4 grid gap-6 md:grid-cols-[1fr,260px]">
           <main className="min-w-0">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={active}
-                variants={pageVariants}
-                initial="initial"
-                animate="animate"
-                exit="exit"
-                style={{
-                  perspective: "1200px",
-                  transformStyle: "preserve-3d",
-                }}
-              >
-                <ActiveComponent isWhiteBackground={isWhiteBackground} />
-              </motion.div>
-            </AnimatePresence>
+            {/* plain wrapper — no mount pop animation */}
+            <div style={{ perspective: "1200px", transformStyle: "preserve-3d" }}>
+              <ActiveComponent isWhiteBackground={isWhiteBackground} />
+            </div>
           </main>
 
-          <Sidebar active={active} setActive={setActive} isWhiteBackground={isWhiteBackground} />
+          <Sidebar active={activeKey} navigate={navigate} isWhiteBackground={isWhiteBackground} />
         </div>
       </div>
     </div>
@@ -146,11 +126,11 @@ export default function CareerPrepWithSidebar() {
 
 function Sidebar({
   active,
-  setActive,
+  navigate,
   isWhiteBackground,
 }: {
   active: string;
-  setActive: (key: string) => void;
+  navigate: (path: string) => void;
   isWhiteBackground: boolean;
 }) {
   return (
@@ -164,12 +144,12 @@ function Sidebar({
       >
         <nav aria-label="CareerPrep Navigation">
           <ul className="space-y-1">
-            {TABS.map(({ key, label, icon: Icon }) => {
+            {TABS.map(({ key, label, icon: Icon, path }) => {
               const selected = active === key;
               return (
                 <li key={key}>
                   <button
-                    onClick={() => setActive(key)}
+                    onClick={() => navigate(path)}
                     className={`group relative flex w-full items-center gap-3 rounded-xl px-3 py-2.5 outline-none transition-all duration-200 ${
                       isWhiteBackground ? "hover:bg-slate-100" : "hover:bg-white/5"
                     }`}
@@ -226,11 +206,11 @@ function Sidebar({
 
 function MobileTabs({
   active,
-  setActive,
+  navigate,
   isWhiteBackground,
 }: {
   active: string;
-  setActive: (key: string) => void;
+  navigate: (path: string) => void;
   isWhiteBackground: boolean;
 }) {
   return (
@@ -243,12 +223,12 @@ function MobileTabs({
         }`}
       >
         <ul className="flex gap-2 overflow-x-auto no-scrollbar">
-          {TABS.map(({ key, label, icon: Icon }) => {
+          {TABS.map(({ key, label, icon: Icon, path }) => {
             const selected = active === key;
             return (
               <li key={key} className="shrink-0">
                 <button
-                  onClick={() => setActive(key)}
+                  onClick={() => navigate(path)}
                   className="group relative flex items-center gap-2 rounded-xl px-3 py-2"
                 >
                   {selected && (
